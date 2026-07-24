@@ -1,0 +1,8 @@
+{
+  "name": "AI Document Search",
+  "description": "Retrieval-Augmented Generation (RAG) system for searching and querying uploaded documents using Google Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
