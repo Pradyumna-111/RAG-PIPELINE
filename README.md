@@ -1,87 +1,89 @@
-# AI Document Search Using LangChain and Gemini
+# AI Document Search (RAG with Google Gemini)
 
-A Retrieval-Augmented Generation (RAG) system that enables semantic search over your documents using Google's Gemini AI. This application allows you to upload documents, build a vector index, and search them using natural language queries through a Streamlit interface.
+An interactive full-stack Retrieval-Augmented Generation (RAG) web application for semantic searching and natural language question-answering over custom uploaded documents. Built with React, TypeScript, Tailwind CSS, Express, and Google's `@google/genai` SDK (`gemini-3.6-flash` and `text-embedding-004`).
 
 ## 🎯 Features
 
-- **Multi-Format Support**: Upload and process PDF, TXT, and DOCX files.
-- **Interactive UI**: User-friendly Streamlit interface for document management and searching.
-- **Vector Embeddings**: Generate semantic embeddings using Google's `gemini-embedding-001`.
-- **FAISS Indexing**: Store embeddings in a local FAISS vector database for fast retrieval.
-- **Semantic Search**: Query documents using natural language and get concise answers from Gemini.
-- **Source Transparency**: View the specific document chunks used to generate each answer.
-
-## 🌐 Live Demo
-
-Try the deployed application here:
-
-🔗 https://ai-document-search-with-langchain-ntdwdrvqpezxwsuwghvnc2.streamlit.app/
-
-
+- **Multi-Format Document Ingestion**: Upload PDF, DOCX, TXT, Markdown, CSV, or JSON files.
+- **Smart Text Chunking & Embeddings**: Automatically splits documents into overlapping text chunks and computes vector embeddings using Google's `text-embedding-004` model.
+- **Fast Similarity Search**: Performs cosine similarity matching with keyword relevance scoring to retrieve the most pertinent excerpts.
+- **Synthesized Answers**: Generates context-grounded natural language answers using `gemini-3.6-flash`.
+- **Source Transparency**: Inspect retrieved document chunks, page/chunk indices, and similarity relevance scores.
+- **Interactive UI**: Responsive desktop and mobile interface with live status indicators, file queues, markdown answer rendering, and vector index controls.
 
 ## 📋 Prerequisites
 
-- Python 3.8 or higher
-- Google AI API Key (Gemini)
+- **Node.js**: v18 or higher
+- **Google AI API Key**: Get your key from [Google AI Studio](https://aistudio.google.com/)
 
-## 🚀 Installation
+## 🚀 Quick Start
 
-1. **Clone the repository**
+1. **Clone or Download the Repository**
    ```bash
    git clone <repository-url>
-   cd ai-document-search
+   cd AI-Document-Search-with-langchain
    ```
 
-2. **Install dependencies**
+2. **Install Dependencies**
    ```bash
-   pip install -r requirements.txt
+   npm install
    ```
 
-## 📖 Usage
+3. **Configure Environment Variables**
+   Create a `.env` file at the project root or configure environment variables:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   ```
+   *(Alternatively, you can enter your API Key directly in the web app sidebar settings UI.)*
 
-### Run the Streamlit App
+4. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000` in your browser.
 
-```bash
-streamlit run main.py
-```
+5. **Build for Production**
+   ```bash
+   npm run build
+   npm start
+   ```
 
-### Workflow
+## 📖 Application Workflow
 
-1. **Enter API Key**: Provide your Google API Key in the sidebar.
-2. **Upload Documents**: Select PDF, TXT, or DOCX files and click "Ingest Documents".
-3. **Search**: Enter your question in the search box to get an AI-generated answer based on your documents.
-4. **View Sources**: Expand the "View Source Documents" section to see the context used for the answer.
-5. **Manage Index**: Use the "Clear Vector Store" button in the sidebar to reset the index.
+1. **Upload Documents**: Drag and drop or browse PDF, TXT, or DOCX files in the upload zone and click **Ingest Documents**.
+2. **Vector Indexing**: The backend server extracts text, splits it into chunks, and computes embeddings via Gemini.
+3. **Ask Questions**: Type natural language queries or select example prompts in the search panel.
+4. **View Answers & Sources**: Read AI-synthesized answers and expand the **View Source Documents** accordion to inspect exact source excerpts and match scores.
 
 ## 📁 Project Structure
 
 ```
-ai-document-search/
-├── config.py          # Centralized configuration and model settings
-├── ingest.py          # Document loading, chunking, and indexing logic
-├── search.py          # RAG search pipeline and chain definition
-├── main.py            # Streamlit UI and application entry point
-├── requirements.txt   # Python dependencies
-├── docs/              # Temporary storage for uploaded documents
-└── vectorstore/       # FAISS index storage (auto-created)
+.
+├── server.ts             # Express application server and API endpoints
+├── server/
+│   └── ragEngine.ts      # Chunking, vector similarity, embedding & Gemini RAG engine
+├── src/
+│   ├── main.tsx          # React application entry point
+│   ├── App.tsx           # Main App layout and state management
+│   ├── types.ts          # TypeScript interfaces for docs and search results
+│   ├── components/
+│   │   ├── Header.tsx font/badge header component
+│   │   ├── Sidebar.tsx   # Settings, API key input, vector index status & clear controls
+│   │   ├── UploadSection.tsx  # Drag-and-drop document uploader
+│   │   ├── DocumentList.tsx   # List of active ingested documents
+│   │   └── SearchSection.tsx   # Query input, AI response & source context inspector
+├── package.json          # Node dependencies and build scripts
+└── vite.config.ts        # Vite build & development server config
 ```
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
-- **Streamlit**: Web interface
-- **LangChain**: LLM orchestration framework
-- **Google Generative AI**: Gemini-1.5-flash LLM and Embeddings
-- **FAISS**: Local vector similarity search
-
-## 🎓 How RAG Works
-
-Retrieval-Augmented Generation (RAG) combines:
-1. **Retrieval**: Find relevant documents based on query similarity.
-2. **Augmentation**: Pass retrieved context to the LLM.
-3. **Generation**: LLM produces answers grounded in the provided context.
-
-This approach reduces hallucinations and ensures answers are based on your specific documents.
+- **Frontend**: React 18, TypeScript, Tailwind CSS, Lucide React, Motion, React Markdown
+- **Backend**: Express, Multer, PDF-Parse, Mammoth
+- **AI / Embeddings**: `@google/genai` (`gemini-3.6-flash`, `text-embedding-004`)
+- **Build Tools**: Vite, TSX, Esbuild
 
 ## 📝 License
 
-MIT License - feel free to use and modify
+MIT License - feel free to adapt and expand!
+
